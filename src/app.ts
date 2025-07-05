@@ -4,21 +4,22 @@ import { booksRoute } from "./app/controllers/book.controller"
 import { borrowRoute } from "./app/controllers/borrow.controller"
 const app:Application = express()
 
-// Environment-based CORS configuration
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://conv-cobbie-4afg47.netlify.app'] 
-    : ['http://localhost:3000', 'http://localhost:5173'],
-  credentials: true,
+// Enhanced CORS configuration for deployment
+app.use(cors({
+  origin: '*',
+  credentials: false,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-};
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range']
+}));
 
-app.use(cors(corsOptions));
+// Handle preflight requests
+app.options('*', cors());
+
 app.use(express.json())
 
-app.use('/books',booksRoute)
-app.use('/borrow',borrowRoute)
+app.use('/api/books',booksRoute)
+app.use('/api/borrow',borrowRoute)
 
 app.get('/',(req:Request,res:Response)=>{
     res.send("welcome to library  app")
