@@ -5,7 +5,10 @@ import { borrowRoute } from "./app/controllers/borrow.controller"
 const app:Application = express()
 
 // Enable CORS for all routes
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  credentials: false
+}));
 app.use(express.json())
 
 app.use('/api/books',booksRoute)
