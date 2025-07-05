@@ -17,8 +17,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json())
 
-app.use('/api/books',booksRoute)
-app.use('/api/borrow',borrowRoute)
+app.use('/books',booksRoute)
+app.use('/borrow',borrowRoute)
 
 app.get('/',(req:Request,res:Response)=>{
     res.send("welcome to library  app")
